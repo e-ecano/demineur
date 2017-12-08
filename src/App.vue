@@ -1,26 +1,40 @@
 <template>
   <div>
 
-    <button @click="hideBomb">Voir les bombe :3</button>
-
-    <!-- Grille -->
+    <h1>Démineur</h1>
+    <h2>Grille 1</h2>
+    <p>Les bombes répondent aux clique<br/>
+      À faire :<br>
+      - changer le background-color au click<br/>
+      - indiquer les bombes "actives" autour de la div cliquée
+    </p>
+    <!-- Grille, toutes les bombes répondent au clique -->
     <table class="grid">
       <tr class="cell"
           v-for="ligne in grille">
         <td class="cell"
-            v-for="cellule in ligne" >
-          <bomb :params="cellule"/>
+            v-for="cellule in ligne"
+            @click="click(cellule)">
+          <div >
+            <bomb :params="cellule"/>
+          </div>
+
         </td>
       </tr>
     </table>
     <!-- /Grille -->
 
-    <!-- Grille Test-->
+    <h2>Grille 2</h2>
+    <p>
+      Les bombes "inactivent" ne répondent pas aux cliques
+    </p>
+    <!-- Grille Test, les bombes "inactives" ne répondent pas au clique-->
     <table class="grid">
       <tr class="cell"
           v-for="ligne in grille">
         <td class="cell"
-            v-for="cellule in ligne">
+            v-for="cellule in ligne"
+            @click="click(cellule)">{{cellule.bombe}}
 
           <bomb v-if="cellule.setBomb" :params="cellule"></bomb>
 
@@ -43,42 +57,27 @@
 
       const grille = []
 
-      var nbAlea = 0
-      var setBomb = false
-
-
       // Lignes
       for (var i = 0; i < 10; i++) {
-
         // Cellules
         var ligne = []
         for (var j = 0; j < 10; j++) {
-
-          /*nbAlea = Math.random() * 100
-          console.log(nbAlea)
-          if (this.nbAlea < 20) {
-            setBomb = true
-          } else {
-            setBomb = false
-          }*/
-
           ligne.push({
-            setBomb: Math.random() * 100 < 20
-            //x: j,
-            //y: i,
-            //clique: false
+            setBomb: Math.random() * 100 < 20,
+            x: j,
+            y: i,
           })
-
         }
         grille.push(ligne)
-
       }
       return {
-        grille: grille
+        grille: grille,
       }
     },
     methods: {
-      hideBomb
+      click(cellule){
+        console.log(`x: ${cellule.x} - y:${cellule.y}`)
+      }
     }
   }
 </script>

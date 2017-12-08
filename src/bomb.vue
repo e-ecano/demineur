@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button @click="explode"
+    <div @click="explode"
             @contextmenu.prevent="turnOff"
             class="bomb"
             :etat="true"
-            >Q {{params.setBomb}}
-    </button>
+            ><span style="visibility: hidden">Q {{params.setBomb}}</span> <!-- Cacher le contenu de la div en la laissant cliquable -->
+    </div>
 
   </div>
 </template>
@@ -35,6 +35,13 @@
           console.log("Bombe désactivée")
         }else{
           console.log("Il n'y a rien à désactiver ici")
+        }
+      },
+      viewBomb(){
+        if(this.params.showBomb){
+          console.log("Jeu sans les réponses")
+        }else{
+          console.log("Jeu avec les réponses")
         }
       }
     }

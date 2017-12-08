@@ -4,7 +4,7 @@
             @contextmenu.prevent="turnOff"
             class="bomb"
             :etat="true"
-            >Q
+            >Q {{params.setBomb}}
     </button>
 
   </div>
@@ -13,17 +13,29 @@
 <script>
   export default {
     name: 'bomb',
-    props: {
-      bomb: {
-        required: false,
-        default: () => ({
-          etat: true
-        })
-      }
+    props:{
+      params:{required: true, default: () => ({}), type: Object}
     },
     methods:{
       explode(){
-        console.log("=== EXPLOSION ! ===")
+
+        //var etat=true  // true=EXPLOSION ; false=pas de bombe
+
+        if(this.params.setBomb){
+          console.log("=== BOOM ! ===")
+        }else{
+          console.log("Il n'y a pas de bombe ici")
+        }
+      },
+      turnOff(){
+
+        //var etat=true
+
+        if(this.params.setBomb){
+          console.log("Bombe désactivée")
+        }else{
+          console.log("Il n'y a rien à désactiver ici")
+        }
       }
     }
   }

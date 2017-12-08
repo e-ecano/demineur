@@ -1,14 +1,34 @@
 <template>
   <div>
+
+    <button @click="hideBomb">Voir les bombe :3</button>
+
+    <!-- Grille -->
     <table class="grid">
       <tr class="cell"
           v-for="ligne in grille">
         <td class="cell"
-            v-for="cellule in ligne"
-            :class="cellule.clique ? 'red' : 'green'"
-            @click="click(cellule)">{{cellule.bombe}}<bomb/></td>
+            v-for="cellule in ligne" >
+          <bomb :params="cellule"/>
+        </td>
       </tr>
     </table>
+    <!-- /Grille -->
+
+    <!-- Grille Test-->
+    <table class="grid">
+      <tr class="cell"
+          v-for="ligne in grille">
+        <td class="cell"
+            v-for="cellule in ligne">
+
+          <bomb v-if="cellule.setBomb" :params="cellule"></bomb>
+
+        </td>
+      </tr>
+    </table>
+    <!-- /Grille Test-->
+
   </div>
 </template>
 
@@ -20,18 +40,35 @@
     name: 'App',
     components: {Bomb},
     data () {
+
       const grille = []
+
+      var nbAlea = 0
+      var setBomb = false
+
+
       // Lignes
-      for(var i = 0; i<10; i++){
+      for (var i = 0; i < 10; i++) {
+
         // Cellules
         var ligne = []
-        for(var j = 0; j<10; j++){
+        for (var j = 0; j < 10; j++) {
+
+          /*nbAlea = Math.random() * 100
+          console.log(nbAlea)
+          if (this.nbAlea < 20) {
+            setBomb = true
+          } else {
+            setBomb = false
+          }*/
+
           ligne.push({
-            bombe: true,
-            x: j,
-            y: i,
-            clique: false
+            setBomb: Math.random() * 100 < 20
+            //x: j,
+            //y: i,
+            //clique: false
           })
+
         }
         grille.push(ligne)
 
@@ -41,13 +78,7 @@
       }
     },
     methods: {
-      click(cellule){
-        console.log(`x: ${cellule.x} - y:${cellule.y}`)
-        cellule.clique = true
-        //if (bomb.etat === false){
-          //console.log(`=== Il n'y a pas de bombe en `)
-        //}
-      },
+      hideBomb
     }
   }
 </script>
